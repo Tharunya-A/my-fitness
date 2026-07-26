@@ -1,17 +1,19 @@
 import pg from 'pg';
 import { env } from './env.config.js';
+import { logger } from '../shared/utils/logger.js';
 
 const { Pool } = pg;
 
-export const pgPool = new Pool({
+export const pool = new Pool({
   connectionString: env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false, // Required for cloud databases like Neon
-  },
-  max: 10, // Max concurrent connections in pool
-  idleTimeoutMillis: 30000, // Close idle clients after 30 sec
+  ssl: env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
 });
 
-pgPool.on('error', (err) => {
-  console.error('❌ Unexpected error on idle PostgreSQL client', err);
+pool.on('connect', () => {
+  logger.info('Connected to PostgreSQL database successfully.');
+});
+
+pool.on('error', (err) => {
+  logger.error('Unexpected error on idle PostgreSQL client:', err);
+  process.exit(-1);
 });
