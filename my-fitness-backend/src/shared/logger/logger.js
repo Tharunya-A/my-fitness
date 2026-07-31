@@ -21,3 +21,9 @@ export const logger = winston.createLogger({
     }),
   ],
 });
+
+// Write logs to files in production
+if (env.NODE_ENV === 'production') {
+  logger.add(new winston.transports.File({ filename: 'logs/error.log', level: 'error' }));
+  logger.add(new winston.transports.File({ filename: 'logs/combined.log' }));
+}
