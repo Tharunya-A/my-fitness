@@ -5,6 +5,7 @@ import {
   createCustomWorkoutSchema,
   createSessionSchema,
   logSessionExerciseSchema,
+  updateSessionSchema,
 } from '../validators/workout.validators.js';
 
 export const workoutController = {
