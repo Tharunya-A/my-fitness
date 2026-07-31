@@ -2,6 +2,7 @@ import { workoutRepository } from '../repositories/workout.repository.js';
 import {
   WorkoutNotFoundError,
   InvalidWorkoutPlanError,
+  UnauthorizedWorkoutAccessError,
 } from '../errors/workout.errors.js';
 
 export const workoutService = {
@@ -43,6 +44,17 @@ export const workoutService = {
     return workoutRepository.listPlans(userId);
   },
 
+  async getPlanById(userId, planId) {
+    const plan = await workoutRepository.findPlanById(planId);
+    if (!plan) {
+      throw new WorkoutNotFoundError();
+    }
+    if (plan.userId.toString() !== userId) {
+      throw new UnauthorizedWorkoutAccessError();
+    }
+    return plan;
+  },
+
   async createSession(userId, payload) {
     return workoutRepository.createSession({
       userId,
@@ -52,6 +64,39 @@ export const workoutService = {
 
   async listSessions(userId) {
     return workoutRepository.listSessions(userId);
+  },
+
+  async getSessionById(userId, sessionId) {
+    const session = await workoutRepository.findSessionById(sessionId);
+    if (!session) {
+      throw new WorkoutNotFoundError();
+    }
+    if (session.userId.toString() !== userId) {
+      throw new UnauthorizedWorkoutAccessError();
+    }
+    return session;
+  },
+
+  async updateSession(userId, sessionId, payload) {
+    const session = await workoutRepository.findSessionById(sessionId);
+    if (!session) {
+      throw new WorkoutNotFoundError();
+    }
+    if (session.userId.toString() !== userId) {
+      throw new UnauthorizedWorkoutAccessError();
+    }
+    return workoutRepository.updateSession(sessionId, payload);
+  },
+
+  async deleteSession(userId, sessionId) {
+    const session = await workoutRepository.findSessionById(sessionId);
+    if (!session) {
+      throw new WorkoutNotFoundError();
+    }
+    if (session.userId.toString() !== userId) {
+      throw new UnauthorizedWorkoutAccessError();
+    }
+    return workoutRepository.deleteSession(sessionId);
   },
 
   async logSessionExercise(sessionId, payload) {
@@ -65,41 +110,5 @@ export const workoutService = {
     await session.save();
 
     return session;
-  },
-
-  async getPlanById(userId, planId) {
-    const plan = await workoutRepository.findPlanById(planId);
-    if (!plan) throw new WorkoutNotFoundError();
-    if (plan.userId.toString() !== userId) {
-      throw new UnauthorizedWorkoutAccessError();
-    }
-    return plan;
-  },
-
-  async getSessionById(userId, sessionId) {
-    const session = await workoutRepository.findSessionById(sessionId);
-    if (!session) throw new WorkoutNotFoundError();
-    if (session.userId.toString() !== userId) {
-      throw new UnauthorizedWorkoutAccessError();
-    }
-    return session;
-  },
-
-  async updateSession(userId, sessionId, payload) {
-    const session = await workoutRepository.findSessionById(sessionId);
-    if (!session) throw new WorkoutNotFoundError();
-    if (session.userId.toString() !== userId) {
-      throw new UnauthorizedWorkoutAccessError();
-    }
-    return workoutRepository.updateSession(sessionId, payload);
-  },
-
-  async deleteSession(userId, sessionId) {
-    const session = await workoutRepository.findSessionById(sessionId);
-    if (!session) throw new WorkoutNotFoundError();
-    if (session.userId.toString() !== userId) {
-      throw new UnauthorizedWorkoutAccessError();
-    }
-    return workoutRepository.deleteSession(sessionId);
   },
 };

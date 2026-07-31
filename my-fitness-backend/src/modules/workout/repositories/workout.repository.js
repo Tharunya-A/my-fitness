@@ -30,24 +30,16 @@ export const workoutRepository = {
     return WorkoutPlan.find({ userId }).sort({ weekStartDate: -1 });
   },
 
+  async findPlanById(planId) {
+    return WorkoutPlan.findById(planId);
+  },
+
   async createSession(input) {
     return WorkoutSession.create(input);
   },
 
   async listSessions(userId) {
     return WorkoutSession.find({ userId }).sort({ actualDate: -1 });
-  },
-
-  async updateSession(sessionId, payload) {
-    return WorkoutSession.findByIdAndUpdate(sessionId, payload, { new: true });
-  },
-
-  async findSessionById(sessionId) {
-    return WorkoutSession.findById(sessionId);
-  },
-
-  async findPlanById(planId) {
-    return WorkoutPlan.findById(planId);
   },
 
   async findSessionById(sessionId) {
