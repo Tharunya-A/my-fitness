@@ -5,6 +5,7 @@ import rateLimit from 'express-rate-limit';
 import compression from 'compression';
 import { notFoundHandler, globalErrorHandler } from './shared/middlewares/error.middleware.js';
 import { registerAuthModule } from './modules/auth/auth.facade.js';
+import { registerHealthModule } from './modules/health/health.facade.js';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './config/swagger.config.js';
 import { env } from './config/env.config.js';
@@ -108,6 +109,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Module Registration
 registerAuthModule(app);
+registerHealthModule(app);
 
 // Unhandled Route & Global Error Handling
 app.use(notFoundHandler);
