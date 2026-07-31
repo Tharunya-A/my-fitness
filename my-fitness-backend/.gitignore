@@ -67,3 +67,8 @@ Desktop.ini
 .temp
 coverage/
 .nyc_output/
+
+#=========================================
+# 7. DocumentationFiles
+#=========================================
+docs/
