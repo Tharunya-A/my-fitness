@@ -7,6 +7,7 @@ import { notFoundHandler, globalErrorHandler } from './shared/middlewares/error.
 import { registerAuthModule } from './modules/auth/auth.facade.js';
 import { registerHealthModule } from './modules/health/health.facade.js';
 import { registerWorkoutModule } from './modules/workout/workout.facade.js';
+import { registerBillingModule } from './modules/billing/billing.facade.js';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './config/swagger.config.js';
 import { env } from './config/env.config.js';
@@ -52,6 +53,7 @@ app.use(cors({
   credentials: true, 
 })); // Restrict CORS in production
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 })); // Rate limit
+app.use('/billing/webhook', express.raw({ type: 'application/json' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -112,6 +114,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 registerAuthModule(app);
 registerHealthModule(app);
 registerWorkoutModule(app);
+registerBillingModule(app);
 // Unhandled Route & Global Error Handling
 app.use(notFoundHandler);
 app.use(globalErrorHandler);

@@ -24,6 +24,11 @@ const envSchema = z.object({
   // External APIs (RapidAPI - ExerciseDB)
   RAPIDAPI_KEY: z.string().min(1, { message: 'RAPIDAPI_KEY is required' }),
   RAPIDAPI_HOST: z.string().default('exercisedb.p.rapidapi.com'),
+
+  // Razorpay Billing
+  RAZORPAY_KEY_ID: z.string().default(''),
+  RAZORPAY_KEY_SECRET: z.string().default(''),
+  RAZORPAY_WEBHOOK_SECRET: z.string().default(''),
 });
 
 const _env = envSchema.safeParse(process.env);
