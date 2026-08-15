@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getHealthMetrics, logBiomarker } from '../api/health.api.js';
+//import { getHealthMetrics, logBiomarker } from '../api/health.api.js';
+import { healthApi } from '../api/health.api.js';
 
 export const useHealthMetrics = () => {
   const [metrics, setMetrics] = useState([]);
@@ -10,7 +11,7 @@ export const useHealthMetrics = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const data = await getHealthMetrics();
+      const data = await healthApi.getHealthMetrics();
       setMetrics(data || []);
     } catch (err) {
       setError(err.response?.data?.message || err.message || 'Failed to fetch health metrics.');
@@ -23,7 +24,7 @@ export const useHealthMetrics = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const newEntry = await logBiomarker(metricData);
+      const newEntry = await healthApi.logMetrics(metricData);
       setMetrics((prev) => [newEntry, ...prev]);
       return newEntry;
     } catch (err) {

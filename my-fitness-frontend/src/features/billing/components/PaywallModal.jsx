@@ -25,7 +25,7 @@ export const PaywallModal = ({ isOpen, onClose, onUpgrade, isLoading = false }) 
             PRO FEATURE LOCKED
           </h2>
           <p className="text-xs text-gray-500 mt-1 max-w-sm mx-auto">
-            Upgrade your SLAM Fitness plan to unlock complete medical analytics and custom workouts.
+            Upgrade your My Fitness plan to unlock complete medical analytics and custom workouts.
           </p>
         </div>
 

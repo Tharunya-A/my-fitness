@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext.jsx';
 import { Dumbbell, Lock, Mail, User, AlertCircle } from 'lucide-react';
+import { useToast } from '../../../context/ToastContext';
 
 export const LoginPage = () => {
   const [isRegister, setIsRegister] = useState(false);
@@ -11,6 +12,8 @@ export const LoginPage = () => {
 
   const { login, register } = useAuth();
   const navigate = useNavigate();
+
+  const { showError } = useToast();
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -29,6 +32,7 @@ export const LoginPage = () => {
       }
       navigate('/dashboard');
     } catch (err) {
+      //showError(err.messages);
       setError(err.message || 'Authentication failed. Please check your credentials.');
     } finally {
       setIsSubmitting(false);

@@ -1,6 +1,16 @@
 import apiClient from '../../../config/api.config.js';
 
 export const healthApi = {
+
+  getMedicalReports: async () => {
+    const response = await apiClient.get('/health/reports');
+    return response.data;
+  },
+
+  getHealthMetrics: async () => {
+    const response = await apiClient.get('/health/metrics');
+    return response.data;
+  },
   // POST /health/metrics
   logMetrics: async (metricsData) => {
     const response = await apiClient.post('/health/metrics', metricsData);

@@ -39,6 +39,7 @@ const authLimiter = rateLimit({
 app.use('/api-docs', apiLimiter);
 app.use('/auth/login', authLimiter);
 app.use('/auth/register', authLimiter);
+app.use('/auth/signup', authLimiter);
 
 // Core Middlewares
 app.use(helmet({

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { uploadMedicalReport, getMedicalReports } from '../api/health.api.js';
+import { healthApi } from '../api/health.api.js';
 
 export const useReportUpload = () => {
   const [reports, setReports] = useState([]);
@@ -11,7 +11,7 @@ export const useReportUpload = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const data = await getMedicalReports();
+      const data = await healthApi.getMedicalReports();
       setReports(data || []);
     } catch (err) {
       setError(err.response?.data?.message || err.message || 'Failed to fetch medical reports.');
@@ -27,7 +27,7 @@ export const useReportUpload = () => {
       const formData = new FormData();
       formData.append('report', file);
 
-      const uploaded = await uploadMedicalReport(formData);
+      const uploaded = await healthApi.uploadMedicalReport(formData);
       setReports((prev) => [uploaded, ...prev]);
       return uploaded;
     } catch (err) {

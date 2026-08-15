@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createOrder, verifyPayment, getSubscriptionStatus } from '../api/billing.api.js';
+import { billingApi } from '../api/billing.api.js';
 import { useRazorpay } from '../../../shared/hooks/useRazorpay.js';
 
 export const useSubscription = () => {
@@ -12,13 +12,13 @@ export const useSubscription = () => {
     setError(null);
     try {
       // 1. Create order from backend
-      const orderData = await createOrder({ plan: planTier });
+      const orderData = await billingApi.createOrder({ plan: planTier });
       
       const options = {
         key: orderData.keyId || import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: orderData.amount,
         currency: orderData.currency || 'INR',
-        name: 'SLAM FITNESS',
+        name: 'MY FITNESS',
         description: `${planTier} Membership Subscription`,
         order_id: orderData.id,
         handler: async (response) => {
@@ -55,7 +55,7 @@ export const useSubscription = () => {
   const fetchStatus = async () => {
     setIsLoading(true);
     try {
-      const status = await getSubscriptionStatus();
+      const status = await billingApi.getSubscriptionStatus();
       return status;
     } catch (err) {
       setError(err.message || 'Failed to load subscription status.');

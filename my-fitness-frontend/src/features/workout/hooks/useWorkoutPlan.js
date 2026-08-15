@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getWorkoutPlans, createWorkoutPlan } from '../api/workout.api.js';
+//import { getWorkoutPlans } from '../api/workout.api.js';
+import { workoutApi } from '../api/workout.api.js';
 
 export const useWorkoutPlan = () => {
   const [plans, setPlans] = useState([]);

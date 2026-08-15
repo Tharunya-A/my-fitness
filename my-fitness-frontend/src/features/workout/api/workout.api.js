@@ -2,6 +2,12 @@ import apiClient from '../../../config/api.config.js';
 
 export const workoutApi = {
   // --- PLANS ---
+
+  createWorkoutPlan: async (workoutData) => {
+    const response = await apiClient.post('/workouts', workoutData);
+    return response.data;
+  },
+
   // POST /workout/plans
   createPlan: async (planData) => {
     const response = await apiClient.post('/workout/plans', planData);

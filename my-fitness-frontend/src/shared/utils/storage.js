@@ -1,5 +1,5 @@
-const TOKEN_KEY = 'slam_auth_token';
-const USER_KEY = 'slam_user_data';
+const TOKEN_KEY = 'myfitness_auth_token';
+const USER_KEY = 'myfitness_user_data';
 
 export const storage = {
   // --- Auth Token ---

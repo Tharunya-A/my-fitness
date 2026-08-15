@@ -33,19 +33,25 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     // Standardize error message extracted from Express AppError
-    const customError = {
-      status: error.response?.status || 500,
-      message: error.response?.data?.message || 'Something went wrong. Please try again.',
-      data: error.response?.data || null,
-    };
+    const data = error.response?.data;
+    const status = error.response?.status || 500;
+    // Check if backend returned structured validation errors
+    if (data?.errors && Array.isArray(data.errors)) {
+      // Extract array of specific messages: ["Password must be at least 8 characters", ...]
+      error.messages = data.errors.map((e) => e.message);
+    } else if (data?.message) {
+      error.messages = [data.message];
+    } else {
+      error.messages = ['An unexpected error occurred. Please try again.'];
+    }
 
     // If 401 Unauthorized occurs, handle token cleanup
-    if (customError.status === 401) {
+    if (status === 401) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
     }
 
-    return Promise.reject(customError);
+    return Promise.reject(error);
   }
 );
 
