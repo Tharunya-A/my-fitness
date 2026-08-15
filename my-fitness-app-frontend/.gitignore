@@ -1,0 +1,74 @@
+# ==========================================
+# 1. Environment Secrets & API Keys
+# ==========================================
+.env
+.env.local
+.env.development
+.env.production
+*.env
+
+# ==========================================
+# 2. Dependency Directories
+# ==========================================
+node_modules/
+jspm_packages/
+web_modules/
+
+# ==========================================
+# 3. Build & Production Outputs
+# ==========================================
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# ==========================================
+# 4. Logs & Debugging Output
+# ==========================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ==========================================
+# 5. Operating System & Editor Files
+# ==========================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+
+# IDEs & Editors (VS Code, JetBrains/WebStorm)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ==========================================
+# 6. Temporary / Local Testing Files
+# ==========================================
+.tmp
+.temp
+coverage/
+.nyc_output/
+
+#=========================================
+# 7. DocumentationFiles
+#=========================================
+docs/

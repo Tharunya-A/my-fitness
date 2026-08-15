@@ -72,10 +72,28 @@ const customWorkoutSchema = new mongoose.Schema(
 
 const workoutPlanSchema = new mongoose.Schema(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, required: true, index: true },
-    name: { type: String, required: true, trim: true },
-    weekStartDate: { type: Date, required: true },
-    days: [dayPlanSchema],
+    userId: {
+      type: Number,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    weekStartDate: {
+      type: Date,
+      required: true,
+    },
+    days: [
+      {
+        dayOfWeek: {
+          type: String,
+          enum: ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'],
+          required: true,
+        },
+        exercises: [String],
+      },
+    ],
   },
   { timestamps: true, collection: 'workout_plans' }
 );

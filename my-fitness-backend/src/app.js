@@ -53,7 +53,7 @@ app.use(cors({
   : '*',
   credentials: true, 
 })); // Restrict CORS in production
-app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 })); // Rate limit
+app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100, skip: (req) => req.method === 'OPTIONS' })); // Rate limit
 app.use('/billing/webhook', express.raw({ type: 'application/json' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
